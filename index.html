@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vantal App Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .app-card:hover { transform: translateY(-4px); }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1f2937; }
+        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="box" class="text-blue-500 w-8 h-8"></i>
+                    <h1 class="text-xl font-bold tracking-tight text-white">Vantal Store</h1>
+                </div>
+                <div class="relative">
+                    <i data-lucide="search" class="absolute left-3 top-2.5 text-gray-400 w-5 h-5"></i>
+                    <input type="text" id="searchInput" placeholder="Search apps..." 
+                           class="bg-gray-700 text-white rounded-full pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-48 sm:w-64 transition-all">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <div id="loading" class="text-center py-20">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+            <p class="text-gray-400">Loading Vantal Library...</p>
+        </div>
+
+        <div id="errorState" class="hidden text-center py-20">
+            <i data-lucide="wifi-off" class="w-16 h-16 text-gray-600 mx-auto mb-4"></i>
+            <h3 class="text-xl font-semibold text-gray-300">Connection Failed</h3>
+            <p class="text-gray-500 mt-2">Could not load the app list. Ensure data.json exists.</p>
+        </div>
+
+        <!-- App Grid -->
+        <div id="appGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 hidden">
+            <!-- Cards are injected here -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-8 text-center text-gray-500 text-sm">
+        <p>&copy; 2026 Vantal App Store. Hosted on GitHub.</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        const repoOwner = 'YOUR_GITHUB_USERNAME'; // CHANGE THIS IF HARDCODING, or it auto-detects relative path
+        const dataUrl = './data.json?t=' + new Date().getTime(); // Cache busting
+
+        let allApps = [];
+
+        async function fetchApps() {
+            try {
+                const response = await fetch(dataUrl);
+                if (!response.ok) throw new Error("Network response was not ok");
+                allApps = await response.json();
+                
+                // Sort by date (newest first)
+                allApps.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                renderApps(allApps);
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('appGrid').classList.remove('hidden');
+            } catch (error) {
+                console.error("Error fetching apps:", error);
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('errorState').classList.remove('hidden');
+            }
+        }
+
+        function renderApps(apps) {
+            const grid = document.getElementById('appGrid');
+            grid.innerHTML = '';
+
+            if(apps.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center text-gray-500 py-10">No apps found matching your search.</div>`;
+                return;
+            }
+
+            apps.forEach(app => {
+                // Handle relative paths for GitHub Pages
+                const iconSrc = app.iconUrl.startsWith('http') ? app.iconUrl : `./${app.iconUrl}`;
+                const downloadSrc = app.downloadUrl.startsWith('http') ? app.downloadUrl : `./${app.downloadUrl}`;
+                
+                const card = document.createElement('div');
+                card.className = 'app-card bg-gray-800 rounded-xl p-5 border border-gray-700 shadow-lg transition-all duration-300 flex flex-col h-full';
+                
+                card.innerHTML = `
+                    <div class="flex items-start justify-between mb-4">
+                        <img src="${iconSrc}" alt="${app.name}" class="w-16 h-16 rounded-2xl bg-gray-700 object-cover" onerror="this.src='https://via.placeholder.com/64?text=App'">
+                        <span class="px-2 py-1 bg-gray-700 text-xs rounded-md text-gray-300 border border-gray-600">${app.category}</span>
+                    </div>
+                    
+                    <h3 class="text-lg font-bold text-white mb-1">${app.name}</h3>
+                    <div class="text-xs text-blue-400 mb-3 font-mono">v${app.version}</div>
+                    
+                    <p class="text-gray-400 text-sm mb-6 flex-grow line-clamp-3">${app.description}</p>
+                    
+                    <div class="mt-auto pt-4 border-t border-gray-700">
+                        <a href="${downloadSrc}" download class="flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            Download
+                        </a>
+                        <div class="text-center mt-2 text-xs text-gray-500">
+                            Updated: ${new Date(app.date).toLocaleDateString()}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allApps.filter(app => 
+                app.name.toLowerCase().includes(term) || 
+                app.description.toLowerCase().includes(term) ||
+                app.category.toLowerCase().includes(term)
+            );
+            renderApps(filtered);
+        });
+
+        // Initialize
+        fetchApps();
+    </script>
+</body>
+</html>
+
