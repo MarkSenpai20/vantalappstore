@@ -8,5 +8,15 @@
         "downloadUrl": "downloads/ID_Printing_App.zip",
         "iconUrl": "icons/printid.jpg",
         "date": "2026-01-07T19:36:26.127867"
+    },
+    {
+        "id": "f6faf660-8f28-4126-be09-c44b2c78fd0a",
+        "name": "Printing POS",
+        "version": "1",
+        "category": "Utility",
+        "description": "Pocket POS: Mobile version",
+        "downloadUrl": "downloads/Printing_POS_SSC_System.apk",
+        "iconUrl": "icons/printPOS.png",
+        "date": "2026-01-07T19:49:25.165079"
     }
 ]
