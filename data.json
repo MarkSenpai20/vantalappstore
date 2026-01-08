@@ -26,7 +26,7 @@
         "category": "Tools",
         "description": "A music downloader via Youtube URLs, for Windows only.",
         "downloadUrl": "downloads/musicdownloader.zip",
-        "iconUrl": "https://via.placeholder.com/64",
+        "iconUrl": "icons/mp3dld.png",
         "date": "2026-01-08T19:32:24.938574"
     }
 ]
