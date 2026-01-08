@@ -18,5 +18,15 @@
         "downloadUrl": "downloads/Printing_POS_SSC_System.apk",
         "iconUrl": "icons/printPOS.png",
         "date": "2026-01-07T19:49:25.165079"
+    },
+    {
+        "id": "4240530c-7e61-4b87-abd9-d74048350529",
+        "name": "Python Music Downloader App for Windows",
+        "version": "1",
+        "category": "Tools",
+        "description": "A music downloader via Youtube URLs, for Windows only.",
+        "downloadUrl": "downloads/musicdownloader.zip",
+        "iconUrl": "https://via.placeholder.com/64",
+        "date": "2026-01-08T19:32:24.938574"
     }
 ]
