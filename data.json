@@ -28,5 +28,15 @@
         "downloadUrl": "downloads/musicdownloader.zip",
         "iconUrl": "icons/mp3dld.png",
         "date": "2026-01-08T19:32:24.938574"
+    },
+    {
+        "id": "968b2a2e-0b56-4862-a1d7-a8e21d86ba14",
+        "name": "Subject 001",
+        "version": "1",
+        "category": "Music",
+        "description": "Subject Series",
+        "downloadUrl": "downloads/Subject_001.wav",
+        "iconUrl": "https://via.placeholder.com/64",
+        "date": "2026-01-09T21:35:45.372869"
     }
 ]
