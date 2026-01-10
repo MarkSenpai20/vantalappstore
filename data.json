@@ -38,5 +38,15 @@
         "downloadUrl": "downloads/Subject_001.wav",
         "iconUrl": "https://via.placeholder.com/64",
         "date": "2026-01-09T21:35:45.372869"
+    },
+    {
+        "id": "83801ff9-b144-4473-8e07-87d8dbc6ec85",
+        "name": "Roblox Dropper Asset",
+        "version": "1",
+        "category": "Assets",
+        "description": "Shared Asset",
+        "downloadUrl": "downloads/DropperGameAssetRoblox.zip",
+        "iconUrl": "https://via.placeholder.com/64",
+        "date": "2026-01-10T22:36:03.356348"
     }
 ]
