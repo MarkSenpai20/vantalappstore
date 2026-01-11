@@ -31,11 +31,11 @@
     },
     {
         "id": "968b2a2e-0b56-4862-a1d7-a8e21d86ba14",
-        "name": "Subject 001",
+        "name": "Subject Series",
         "version": "1",
         "category": "Music",
-        "description": "Subject Series",
-        "downloadUrl": "downloads/Subject_001.wav",
+        "description": "Subject Series ZIP File.",
+        "downloadUrl": "downloads/Subject_Series.zip",
         "iconUrl": "https://via.placeholder.com/64",
         "date": "2026-01-09T21:35:45.372869"
     },
